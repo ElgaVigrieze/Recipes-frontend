@@ -30,6 +30,4 @@ import { RecipeComponent } from './recipe/recipe.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-
-}
+export class AppModule { }

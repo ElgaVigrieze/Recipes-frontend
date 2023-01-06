@@ -86,7 +86,6 @@ export class UpdateRecipeComponent implements OnInit {
     })
     this.getRecipe(this.id);
     this.mapFormValuesToRecipeModel();
-    this.pic = this.loadPic();
   }
 
   getRecipe(id: number){
@@ -94,6 +93,11 @@ export class UpdateRecipeComponent implements OnInit {
       next: (recipe: Recipe) => {
         this.uploadRecipe(recipe);
         this.recipe = recipe;
+      if(this.recipe.pic == this.imageHandler.defaultPic){
+          this.pic = this.imageHandler.defaultPicPath;
+      }else{
+        this.pic = this.loadPic();
+      }
       },
       error: (err: any) => console.log(err)
     }
@@ -104,7 +108,6 @@ export class UpdateRecipeComponent implements OnInit {
     this.newRecipe.patchValue({
       title: recipe.title,  
       portionSize: recipe.portionSize,  
-      pic: recipe.pic,
     });
     this.newRecipe.setControl('iblocks',this.setExistingIblocks(recipe.iblocks));
      this.newRecipe.setControl('instructions',this.setExistingInstructions(recipe.instructions));

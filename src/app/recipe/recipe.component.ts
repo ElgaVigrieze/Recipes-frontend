@@ -26,8 +26,6 @@ export class RecipeComponent implements OnInit  {
   ngOnInit(): void { 
     this.id = this.route.snapshot.params['id'];
     this.getRecipe(this.id);
- 
-    
   }
 
   private getRecipe(id: number){
@@ -48,6 +46,5 @@ export class RecipeComponent implements OnInit  {
       let objectURL = URL.createObjectURL(blob);       
       this.pic = this.sanitizer.bypassSecurityTrustUrl(objectURL);
     });
-
   }
 }

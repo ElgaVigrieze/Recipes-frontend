@@ -79,13 +79,10 @@ saveRecipe(){
       console.log(result);  
       if(result > 0 )  {  
         if(this.selectedFiles != null) {  
-          console.log("konstatē, ka files nav null")
-          this.currentFileUpload = this.selectedFiles.item(0);  
-          console.log(this.currentFileUpload);  
+          this.currentFileUpload = this.selectedFiles.item(0);   
           this.imageHandler.uploadImage(this.currentFileUpload , result)
         }
         else{
-          console.log("konstatē, ka files ir null")
           this.recipeService.setDefaultPic(this.recipe.id);
         }  
       }  
