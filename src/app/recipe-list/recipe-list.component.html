@@ -1,0 +1,22 @@
+<h2>All Recipes</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nosaukums</th>
+            <th>Darbības</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let r of recipes">
+            <td>{{r.title}}</td>
+            <!-- <td>{{r.ingredients.length}}</td> -->
+            <td>
+                <button (click)="viewRecipe(r.id)" class="btn btn-success">Apskatīt</button>
+                <button (click)="updateRecipe(r.id)" class="btn btn-info">Rediģēt</button>
+                <button (click)="deleteRecipe(r.id)" class="btn btn-danger">Dzēst</button>
+            </td>
+
+        </tr>
+    </tbody>
+</table>
+

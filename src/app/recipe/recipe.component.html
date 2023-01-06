@@ -1,0 +1,30 @@
+
+<div class="container">
+    <header> <td style="padding-right: 5px;"><h3 style="padding-right: 5px;">{{recipe.title}} </h3></td> 
+        <td>({{recipe.portionSize}}) </td>
+    </header>
+    
+<table class="table">
+    <tbody>
+        <tr>
+            <td><h5>Sastāvdaļas</h5></td>
+
+            <td  rowspan="30"> <img  [src]='pic' style="width:500px;height:350px;"/></td>
+        </tr>
+            <ng-container *ngFor="let block of recipe.iblocks "><h6>{{block.title}}</h6>
+                <ng-container *ngFor="let i of block.ingredients">
+         <tr>
+            <td>{{i.name}}, {{i.quantity}} {{i.unit}}</td>
+            
+        </tr>
+    </ng-container>
+</ng-container>
+<tr>
+    <td><h5>Pagatavošana</h5></td>
+</tr>
+<ng-container  *ngFor="let i of recipe.instructions; let j = index">
+    <tr>
+        <td>{{j+1}}. {{i.body}}</td>
+    </tr>
+</ng-container >   
+</tbody>

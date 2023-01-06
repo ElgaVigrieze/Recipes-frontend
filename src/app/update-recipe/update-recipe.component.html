@@ -1,0 +1,103 @@
+<div class="container"> 
+  <form  [formGroup]="newRecipe" (ngSubmit)="onSubmit()">
+    <tr>
+      <td  width="30%">
+        <label for="title"><h4>Nosaukums: </h4></label>
+      </td>
+      <td colspan="70%">
+        <input id="title" type="text" formControlName="title" size="50">
+      </td>
+    </tr>
+    <tr>
+      <td  width="30%">
+        <label  > <h5>Porcijas: </h5></label>
+      </td>
+      <td colspan="40%">
+        <input type="text" formControlName="portionSize" >
+      </td>
+    </tr>
+    <br>  
+        
+  <div class="form-group" formArrayName="iblocks">
+      <button type="button" (click)="addBlock()">+ Pievienot sastāvdaļu grupu</button>
+      
+    <div *ngFor="let block of newRecipe.controls.iblocks['controls']; let i=index" [formGroupName]="i">
+      
+      <tr>
+        <td width="30%">
+          <label for="title"><h5>Grupas nosaukums: </h5></label>
+        </td>
+        <td width="30%">
+          <input id="title" type="text" formControlName = "title"/>
+        </td>
+        <td width="20%">
+          <button (click)="removeBlock(i)">- Noņemt</button>
+        </td>
+      </tr>
+  <br>
+      <div class="form-group" formArrayName="ingredients">
+        <tr>
+          <td width="30%">
+            <h6>Sastāvdaļas</h6>  
+          </td>
+        </tr>
+
+          <div *ngFor="let in of block.controls.ingredients['controls']; let j=index" [formGroupName]="j">  
+      <tr>
+        <td width="10%">
+          <label >Nosaukums:</label>
+        </td>
+        <td width="25%">
+          <input type="text" formControlName = "name" />
+        </td>
+        <td width="10%"> 
+          <label >Mērvienība:</label>
+        </td>
+        <td width="15%"> 
+          <select formControlName = "unit">
+            <option  *ngFor="let u of units" [ngValue]="convertToEnumKey(u)" >{{u}}</option>
+          </select>
+        </td>
+        <td width="5%"> 
+          <label for="quantity">Skaits: </label>
+        </td>
+        <td> 
+          <input id="quantity" type="number" formControlName= "quantity"/>
+        </td>
+        <td>
+          <button (click)="removeIngredient(j,i)">- Noņemt</button>
+        </td>
+      </tr>
+    </div>
+    <br>
+    <button type="button" (click)="addIngredient(i)">+ Pievienot sastāvdaļu</button>
+  </div>
+  </div>
+  </div> 
+  <br>
+  <div class="form-group" formArrayName="instructions">
+    <h5>Pagatavošana</h5>
+    <button type="button" (click)="addInstruction()">+ Pievienot vēl vienu soli</button>
+    <div *ngFor="let instruction of newRecipe.controls.instructions['controls']; let i=index" [formGroupName]="i">
+  
+      <tr>
+        <td width="5%"> 
+  <label for="body">Solis: </label>
+        </td>
+        <td width="5%">
+   <input id="body" type="text" formControlName = "body" size="90"/>
+        </td>
+        <td width="10%"> 
+    <button (click)="removeInstruction(i)">- Noņemt</button>
+        </td>
+      </tr>
+    </div>
+  </div>
+  <br>
+  <label>Attēls</label>
+<input type="file" name = "file" formControlName = "pic" (change)="selectFile($event)">
+<img alt="My image name"  [src]='pic' style="width:500px;height:350px;"/>
+<button class="btn btn-success" type="submit">Saglabāt</button>
+</form>
+
+
