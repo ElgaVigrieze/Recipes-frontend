@@ -1,4 +1,4 @@
-import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
@@ -13,7 +13,12 @@ export class RecipeService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getRecipeList(): Observable<Recipe[]>{
+  getRecipeList():  Observable<Recipe[]>{
+    let username='elga'
+    let password='elga123'
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
+
+    //  return this.httpClient.get<Recipe[]>(`${this.baseUrl}`,{headers})
     return this.httpClient.get<Recipe[]>(`${this.baseUrl}`)
   }
 
@@ -29,8 +34,9 @@ export class RecipeService {
   }  
 
   setDefaultPic(id){
-    console.log("default pic funkcija javascriptā")
-    return this.httpClient.get(`${this.baseUrl}/defaultPic/${id}`, id);  
+    let url = `${this.baseUrl}/default/${id}`
+    console.log(url)
+    return this.httpClient.get(url,id);  
   }
 
 

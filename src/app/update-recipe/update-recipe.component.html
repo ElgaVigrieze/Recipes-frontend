@@ -1,4 +1,5 @@
 <div class="container"> 
+  <div *ngIf="isLoggedIn; else warn">
   <form  [formGroup]="newRecipe" (ngSubmit)="onSubmit()">
     <tr>
       <td  width="30%">
@@ -99,5 +100,11 @@
 <img alt="My image name"  [src]='pic' style="width:500px;height:350px;"/>
 <button class="btn btn-success" type="submit">Saglabāt</button>
 </form>
+</div>
 
+<ng-template #warn>
+  <div>Lūdzu, pieraksties, lai rediģētu recepti!</div>
+  </ng-template>
+
+</div>
 

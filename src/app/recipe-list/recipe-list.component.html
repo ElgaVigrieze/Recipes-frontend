@@ -12,10 +12,10 @@
             <!-- <td>{{r.ingredients.length}}</td> -->
             <td>
                 <button (click)="viewRecipe(r.id)" class="btn btn-success">Apskatīt</button>
-                <button (click)="updateRecipe(r.id)" class="btn btn-info">Rediģēt</button>
-                <button (click)="deleteRecipe(r.id)" class="btn btn-danger">Dzēst</button>
+                <button *ngIf="isLoggedIn" (click)="updateRecipe(r.id)" class="btn btn-info">Rediģēt</button>
+                <button *ngIf="isLoggedIn"(click)="deleteRecipe(r.id)" class="btn btn-danger">Dzēst</button>
             </td>
-
+        
         </tr>
     </tbody>
 </table>

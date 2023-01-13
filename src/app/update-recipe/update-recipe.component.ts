@@ -10,6 +10,7 @@ import { Instruction } from '../classes/instruction';
 import { Iblock } from '../classes/iblock';
 import { ImageHandler } from '../handler/image.handler';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { AppService } from '../services/app.service';
 
 
 @Component({
@@ -29,11 +30,12 @@ export class UpdateRecipeComponent implements OnInit {
     currentFileUpload: File;
     selectedFile: File | null;
     changeImage = false;
+    isLoggedIn = this.appService.authenticated;
 
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute,
     private router: Router, private fb: FormBuilder, private imageHandler: ImageHandler,
-    private sanitizer: DomSanitizer){
+    private sanitizer: DomSanitizer, private appService: AppService){
       this.selectedFile = null;
     }
 

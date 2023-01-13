@@ -4,12 +4,27 @@
             <a routerLink="recipes" routerLinkActive="active" class="nav-link">Visas receptes</a>
         </li>
         <li class="nav-item">  <a routerLink="create-recipe" routerLinkActive="active" class="nav-link">Jauna recepte</a></li>
-    </ul>
+        <li class="nav-item">
+            <a routerLink="signup" routerLinkActive="active" class="nav-link">Izveidot kontu</a>
+        </li>
+            <li> <ng-template [ngIf] = isLoggedIn  [ngIfElse]="noLog">
+                <a  class="nav-link" routerLink="/logout">Logout</a>
+             </ng-template>
+            
+             <ng-template #noLog>
+                <a #noLog class="nav-link" routerLink="/login">Login</a>
+            </ng-template>
+        </li>
+
+            </ul>
 </nav>
 
 <h1 class="text-center">{{title}}</h1>
 <div class="container">
     <router-outlet></router-outlet>
+
+
+    
 </div>
 
 

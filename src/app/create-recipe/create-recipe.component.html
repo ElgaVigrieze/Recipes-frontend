@@ -1,4 +1,5 @@
 <div class="container"> 
+  <div *ngIf="isLoggedIn; else warn">
 <form  [formGroup]="newRecipe" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
   <tr>
     <td  width="30%">
@@ -101,3 +102,9 @@
 
 <button class="btn btn-success" type="submit">Saglabāt</button>
 </form>
+
+</div>
+<ng-template #warn>
+<div>Lūdzu, pieraksties, lai izveidotu jaunu recepti!</div>
+</ng-template>
+</div>

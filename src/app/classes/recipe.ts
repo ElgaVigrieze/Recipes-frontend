@@ -11,6 +11,7 @@ export class Recipe {
     iblocks!: Iblock[];
     instructions!: Instruction[];
     pic: File | SafeUrl;
+    isCustom: boolean;
 
     constructor(){}
 

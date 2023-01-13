@@ -1,14 +1,11 @@
-import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, UrlMatchResult } from '@angular/router';
-import { Observable } from 'rxjs/internal/Observable';
-import { Subject } from 'rxjs/internal/Subject';
-import { Iblock } from '../classes/iblock';
 import { Recipe } from '../classes/recipe';
 import { Unit } from '../enum/unit';
 import { RecipeService } from '../services/recipe.service';
 import { ImageHandler } from '../handler/image.handler';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-create-recipe',
@@ -20,6 +17,7 @@ export class CreateRecipeComponent implements OnInit {
   id!: number;
   recipe: Recipe = new Recipe();
   units=Object.values(Unit);
+  isLoggedIn = this.appService.authenticated;
 
   selectedFiles: FileList;
   currentFileUpload: File;
@@ -27,7 +25,7 @@ export class CreateRecipeComponent implements OnInit {
   changeImage = false;
 
   constructor(private recipeService: RecipeService, private router: Router, 
-    private fb: FormBuilder, private route: ActivatedRoute, 
+    private fb: FormBuilder, private route: ActivatedRoute, private appService: AppService,
     private imageHandler: ImageHandler){}
   
   ngOnInit(): void {}
@@ -43,7 +41,6 @@ export class CreateRecipeComponent implements OnInit {
   selectFile(event) {
     this.selectedFiles = event.target.files;
   }
-
 
   ingredient = this.fb.group({
     'name':[''],
@@ -75,20 +72,23 @@ saveRecipe(){
   this.recipe = Object.assign(this.recipe,this.newRecipe.value);
   this.recipeService.createRecipe(this.recipe).subscribe(  
   response => {  
-      let result = response;  
-      console.log(result);  
+      let result = response;   
       if(result > 0 )  {  
         if(this.selectedFiles != null) {  
           this.currentFileUpload = this.selectedFiles.item(0);   
           this.imageHandler.uploadImage(this.currentFileUpload , result)
         }
         else{
-          this.recipeService.setDefaultPic(this.recipe.id);
+          this.recipeService.setDefaultPic(result) .subscribe(response => {
+            console.log("default picture set successfully")
+          }, error => {
+            console.log(error)
+          });
         }  
       }  
   },  
   error => {  
-    console.log("error while saving data in the DB");  
+    console.log(error);  
   }  
 );  
 
@@ -98,13 +98,6 @@ saveRecipe(){
     this.router.navigate(['/recipes']);
   }
 
-  // goToRecipe(){
-  //   this.recipeService.getLastRecipe().subscribe({
-  //     next: (data: Recipe) => {this.recipe = data},
-  //   });
-  //   console.log(this.recipe.id);
-  //   this.router.navigate(['/recipes/'+this.recipe.id]);
-  // }
 
   onSubmit(){
     this.saveRecipe();
