@@ -21,8 +21,8 @@ export class LogoutComponent {
 
   logout() {
           this.appService.authenticated = false;
+          this.appService.authUser = null;
           this.router.navigateByUrl('/');
-          console.log(this.appService.authenticated)
 }
 
 //   logout() {

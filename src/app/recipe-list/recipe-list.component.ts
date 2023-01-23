@@ -11,13 +11,15 @@ import { RecipeService } from '../services/recipe.service';
 })
 export class RecipeListComponent {
   recipes!: Recipe[];
+  recipe = new Recipe;
   isLoggedIn = this.appService.authenticated;
+  currentUser = this.appService.authUser;
 
-  constructor(private recipeService: RecipeService, private router: Router, private appService: AppService){}
+  constructor(private recipeService: RecipeService, private router: Router, 
+    private appService: AppService){}
 
   ngOnInit(): void{
     this.getRecipes();
-    console.log(this.appService.authenticated)
   }
 
   private getRecipes(){
@@ -37,10 +39,21 @@ export class RecipeListComponent {
 
   deleteRecipe(id: number){
     this.recipeService.deleteRecipe(id).subscribe(data => {
-      console.log(data);
       this.getRecipes();
     })
 
+  }
+
+  checkIfAuthor(recipe){
+    if(this.currentUser == null){
+      return false;
+    }
+    if(recipe.user.id===this.currentUser.id){
+        return true;
+    }
+    else{
+      return false;
+    }
   }
 
 }

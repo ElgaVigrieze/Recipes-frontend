@@ -9,11 +9,11 @@
     <tbody>
         <tr *ngFor="let r of recipes">
             <td>{{r.title}}</td>
-            <!-- <td>{{r.ingredients.length}}</td> -->
             <td>
                 <button (click)="viewRecipe(r.id)" class="btn btn-success">Apskatīt</button>
-                <button *ngIf="isLoggedIn" (click)="updateRecipe(r.id)" class="btn btn-info">Rediģēt</button>
-                <button *ngIf="isLoggedIn"(click)="deleteRecipe(r.id)" class="btn btn-danger">Dzēst</button>
+                <button *ngIf="checkIfAuthor(r)" (click)="updateRecipe(r.id)" class="btn btn-info">Rediģēt</button>
+                <button *ngIf="checkIfAuthor(r)" (click)="deleteRecipe(r.id)" class="btn btn-danger">Dzēst</button>
+                
             </td>
         
         </tr>

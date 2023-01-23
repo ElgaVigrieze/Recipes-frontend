@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize } from 'rxjs/internal/operators/finalize';
 import { AppService } from './services/app.service';
 
 @Component({
@@ -20,7 +19,12 @@ export class AppComponent {
    constructor(private appService: AppService, private router: Router, private http: HttpClient,private route: ActivatedRoute) {}
 
    ngOnInit() {
-    console.log(this.isLoggedIn)
+      this.router.events.subscribe(event => {
+        if (event.constructor.name === "NavigationEnd") {
+         this.isLoggedIn = this.appService.authenticated;
+        }
+      })
+    
    }
 
 

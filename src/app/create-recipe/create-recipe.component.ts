@@ -18,6 +18,7 @@ export class CreateRecipeComponent implements OnInit {
   recipe: Recipe = new Recipe();
   units=Object.values(Unit);
   isLoggedIn = this.appService.authenticated;
+  currentUser = this.appService.authUser;
 
   selectedFiles: FileList;
   currentFileUpload: File;
@@ -25,10 +26,12 @@ export class CreateRecipeComponent implements OnInit {
   changeImage = false;
 
   constructor(private recipeService: RecipeService, private router: Router, 
-    private fb: FormBuilder, private route: ActivatedRoute, private appService: AppService,
+    private fb: FormBuilder, private appService: AppService,
     private imageHandler: ImageHandler){}
   
-  ngOnInit(): void {}
+  ngOnInit(): void {
+console.log(this.currentUser)
+  }
 
   change($event) {
     this.changeImage = true;
@@ -36,7 +39,6 @@ export class CreateRecipeComponent implements OnInit {
   changedImage(event) {
     this.selectedFile = event.target.files[0];
   }
-  
   
   selectFile(event) {
     this.selectedFiles = event.target.files;
@@ -70,10 +72,11 @@ export class CreateRecipeComponent implements OnInit {
 
 saveRecipe(){
   this.recipe = Object.assign(this.recipe,this.newRecipe.value);
+  this.recipe.user = this.appService.authUser;
   this.recipeService.createRecipe(this.recipe).subscribe(  
   response => {  
       let result = response;   
-      if(result > 0 )  {  
+      if(result > 0) {  
         if(this.selectedFiles != null) {  
           this.currentFileUpload = this.selectedFiles.item(0);   
           this.imageHandler.uploadImage(this.currentFileUpload , result)
@@ -86,23 +89,20 @@ saveRecipe(){
           });
         }  
       }  
+      this.goToRecipeList();
   },  
   error => {  
     console.log(error);  
   }  
 );  
-
 }  
 
   goToRecipeList(){
     this.router.navigate(['/recipes']);
   }
 
-
   onSubmit(){
     this.saveRecipe();
-
-    this.goToRecipeList();
   }
 
   get allIBlocks() {
@@ -114,13 +114,11 @@ saveRecipe(){
   }
 
   get allIngredients() {
-    console.log(this.iblock.value)
     return this.iblock.get('ingredients') as FormArray;
   }
 
   removeIngredient(j:number, i: number): void {
     this.iblock = this.getIBlock(i);
-    console.log(this.allIngredients.at(j).value)
     this.allIngredients.removeAt(j);
   }
 
@@ -130,9 +128,7 @@ saveRecipe(){
       unit:'',
       quantity:0,
     })
-
     this.iblock = this.getIBlock(i);
-    console.log(this.allIngredients.value)
     this.allIngredients.push(newIngredient);
   }
 

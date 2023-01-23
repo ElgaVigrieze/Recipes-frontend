@@ -3,17 +3,19 @@
         <li class="nav-item">
             <a routerLink="recipes" routerLinkActive="active" class="nav-link">Visas receptes</a>
         </li>
-        <li class="nav-item">  <a routerLink="create-recipe" routerLinkActive="active" class="nav-link">Jauna recepte</a></li>
-        <li class="nav-item">
-            <a routerLink="signup" routerLinkActive="active" class="nav-link">Izveidot kontu</a>
-        </li>
-            <li> <ng-template [ngIf] = isLoggedIn  [ngIfElse]="noLog">
-                <a  class="nav-link" routerLink="/logout">Logout</a>
+        <li class="nav-item" *ngIf = "isLoggedIn">  <a routerLink="create-recipe" routerLinkActive="active" class="nav-link">Jauna recepte</a></li>
+            <li> <ng-template [ngIf] = isLoggedIn  [ngIfElse]="noLog" >
+                <a  class="nav-link" routerLink="/logout">Izrakstīties</a>
              </ng-template>
-            
-             <ng-template #noLog>
-                <a #noLog class="nav-link" routerLink="/login">Login</a>
+            </li>  
+            <li>
+                <ng-template #noLog>
+                    <a routerLink="signup" routerLinkActive="active" class="nav-link">Izveidot kontu</a>
             </ng-template>
+             <ng-template [ngIf] = !isLoggedIn>
+                <a #noLog class="nav-link" routerLink="/login">Mans konts</a>
+            </ng-template>
+
         </li>
 
             </ul>

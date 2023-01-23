@@ -14,11 +14,6 @@ export class RecipeService {
   constructor(private httpClient: HttpClient) { }
 
   getRecipeList():  Observable<Recipe[]>{
-    let username='elga'
-    let password='elga123'
-    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-
-    //  return this.httpClient.get<Recipe[]>(`${this.baseUrl}`,{headers})
     return this.httpClient.get<Recipe[]>(`${this.baseUrl}`)
   }
 
@@ -35,7 +30,6 @@ export class RecipeService {
 
   setDefaultPic(id){
     let url = `${this.baseUrl}/default/${id}`
-    console.log(url)
     return this.httpClient.get(url,id);  
   }
 
